@@ -1,0 +1,3 @@
+# Local development account supplied by the Sites Vite plugin.
+# Copy to .dev.vars for organizer controls in the local preview.
+ORGANIZER_EMAIL=seedy@sites.test
