@@ -1,63 +1,63 @@
 # Vienna Quest
 
-**Et si un voyage à deux devenait une aventure en pixel art ?**
+**Turn a trip into a pixel-art adventure.**
 
-Vienna Quest transforme un programme de voyage en quêtes : une carte imaginaire de Vienne, des lieux à dévoiler au bon moment, une progression partagée et des souvenirs à raconter en photos.
+Vienna Quest turns a travel itinerary into a series of quests: an imaginary map of Vienna, places revealed at just the right moment, shared progress, and memories captured in photos.
 
-Le projet a été créé avec ChatGPT et Codex pour un séjour à Vienne en octobre 2026. Ce dépôt en présente une version anonymisée : les personnages sont « Joueur 1 » et « Joueur 2 », les cadeaux sont destinés à des proches fictifs et l'hôtel est un exemple. L'itinéraire reste un exemple daté d'octobre 2026.
+Built with ChatGPT and Codex for a real trip to Vienna in October 2026, the project was designed to help one partner gradually reveal the adventure to the other. This public version uses generic player names, gift recipients, and hotel details. The itinerary remains an example from October 2026.
 
-![La carte imaginaire de Vienna Quest](public/vienna-map.webp)
+![Vienna Quest's imaginary pixel-art map](public/vienna-map.webp)
 
-## L'expérience
+## The experience
 
-- **Explorer une carte en pixel art** : déplacement, zoom et parcours au clavier ou au toucher.
-- **Garder la surprise** : l'organisateur dévoile les destinations progressivement ; l'explorateur découvre d'abord des indices.
-- **Valider les étapes par une photo**, avec aperçu avant enregistrement.
-- **Partager la progression** entre les appareils autorisés à accéder au même voyage.
-- **Trouver des cadeaux** au fil de quêtes optionnelles, sans photo obligatoire.
-- **Constituer un coffre des souvenirs** : plusieurs photos, chacune accompagnée d'un commentaire obligatoire.
-- **Conserver les originaux** des photos et leurs métadonnées lorsqu'ils sont disponibles.
-- **Utiliser l'interface en paysage**, avec un manifeste et des icônes pour l'ajout à l'écran d'accueil.
+- **Explore a pixel-art map** with panning, zooming, and touch or keyboard controls.
+- **Keep the surprise alive**: the organizer reveals destinations gradually, while the explorer starts with clues.
+- **Complete quests with a photo**, with a preview before saving.
+- **Share progress** across devices authorized to access the same trip.
+- **Find gifts along the way** through optional quests that do not require photos.
+- **Build a memory chest** with multiple photos, each accompanied by a required comment.
+- **Keep original photos** and their metadata when available.
+- **Play in landscape mode**, with a web manifest and icons for adding the app to a home screen.
 
-Une connexion internet est nécessaire pour la version hébergée. Il ne s'agit pas d'une application hors ligne. La carte est artistique ; les liens d'itinéraire utilisent les véritables adresses.
+The hosted app requires an internet connection; offline use is not supported. The map is artistic, while directions links use real addresses. The original app interface and sample quest text are in French; this README is in English.
 
-## Code public, voyage privé
+## Public source, private memories
 
-Le dépôt contient le code, les illustrations de l'interface et les migrations de base de données. Il ne contient aucune photo de voyage, aucun commentaire personnel, aucune progression enregistrée, aucun export de base de données ni identifiant de déploiement.
+This repository contains the application code, interface artwork, and database migrations. It includes no personal trip photos, private comments, saved progress, database exports, credentials, or production site identifier.
 
-Le site original conserve son accès privé. Ce dépôt n'est pas connecté à sa base de données ou à son stockage photo.
+The original hosted trip remains private. This repository has no connection to its database or photo storage.
 
-## Stack
+## Tech stack
 
-| Partie | Technologies |
+| Layer | Technologies |
 | --- | --- |
-| Interface | React 19, TypeScript, Tailwind CSS 4, composants Radix/shadcn |
-| Application | Vinext, Vite et conventions de routage Next.js |
-| API | Routes serveur TypeScript, validation Zod |
-| Progression | Cloudflare D1 / SQLite, schéma et migrations Drizzle |
-| Photos | Cloudflare R2, aperçu JPEG et fichier original |
-| Hébergement original | ChatGPT Sites, connexion et accès contrôlés par la plateforme |
+| Interface | React 19, TypeScript, Tailwind CSS 4, Radix/shadcn components |
+| Application | Vinext, Vite, and Next.js routing conventions |
+| API | TypeScript server routes with Zod validation |
+| Progress | Cloudflare D1 / SQLite, with a Drizzle schema and migrations |
+| Photos | Cloudflare R2, storing a JPEG preview and the original file |
+| Original hosting | ChatGPT Sites, with platform-managed sign-in and access |
 
-## Lancer en local
+## Run locally
 
-Prérequis : Node.js 24 et la version de pnpm déclarée dans `package.json`. Les dépendances sont verrouillées dans `pnpm-lock.yaml`.
+Requirements: Node.js 24 and the pnpm version specified in `package.json`. Dependencies are locked in `pnpm-lock.yaml`.
 
 ```bash
 pnpm install --frozen-lockfile
 ```
 
-Copiez `.dev.vars.example` vers `.dev.vars`. L'adresse `seedy@sites.test` est un compte de développement fictif fourni par le plugin local ; elle permet d'utiliser les commandes organisateur.
+Copy `.dev.vars.example` to `.dev.vars`. The address `seedy@sites.test` is a fictional development account provided by the local plugin; it enables the organizer controls.
 
 ```bash
 pnpm db:setup
 pnpm dev
 ```
 
-Ouvrez `http://localhost:5173` puis utilisez le bouton de connexion. En développement local, cette connexion est simulée et ne demande aucun compte ChatGPT. Les quêtes principales commencent cachées : utilisez le menu organisateur pour les dévoiler.
+Open `http://localhost:5173` and use the sign-in button. Local development uses simulated sign-in and does not require a ChatGPT account. Main quests start hidden: use the organizer menu to reveal them.
 
-`db:setup` applique uniquement les migrations dans la base locale, sous `.wrangler/state`. Il n'accède pas au voyage original. Les photos et la progression que vous créez localement restent dans cet environnement de développement.
+`db:setup` applies migrations only to the local database under `.wrangler/state`. It does not access the original trip. Photos and progress created locally stay in your development environment.
 
-## Vérifications
+## Checks
 
 ```bash
 pnpm test
@@ -65,40 +65,36 @@ pnpm typecheck
 pnpm build
 ```
 
-Le test d'intégration existant utilise SQLite en mémoire et un stockage objet simulé. Il vérifie notamment les migrations, les commentaires obligatoires, la conservation des originaux, les reprises après interruption, les règles de visibilité et la préservation des anciennes photos.
+The existing integration test uses in-memory SQLite and simulated object storage. It checks migrations, required comments, original file retention, recovery after interrupted responses, visibility rules, and preservation of earlier photos.
 
-## Adapter l'aventure
+## Make it your own
 
-| Fichier | Contenu |
+| File | What it contains |
 | --- | --- |
-| `lib/missions.ts` | Destinations, indices, descriptions, horaires et cadeaux |
-| `lib/quest-types.ts` | Types et chapitres du voyage |
-| `app/quest.tsx` | Interface principale et commandes organisateur |
-| `app/world-map.tsx` | Carte, marqueurs et déplacement du duo |
-| `app/quest-photo.tsx` | Photos de validation |
-| `app/quest-album.tsx` | Album avec commentaires |
-| `app/api/` | Progression et enregistrement des images |
-| `db/schema.ts`, `drizzle/` | Schéma et migrations de données |
-| `public/` | Carte, personnages et icônes |
+| `lib/missions.ts` | Destinations, clues, descriptions, schedules, and gift quests |
+| `lib/quest-types.ts` | Types and trip chapters |
+| `app/quest.tsx` | Main interface and organizer controls |
+| `app/world-map.tsx` | Map, markers, and movement of the player duo |
+| `app/quest-photo.tsx` | Quest completion photos |
+| `app/quest-album.tsx` | Photo album with comments |
+| `app/api/` | Progress tracking and image storage routes |
+| `db/schema.ts`, `drizzle/` | Database schema and migrations |
+| `public/` | Map artwork, characters, and icons |
 
-Les horaires, réservations et adresses de l'itinéraire sont des données d'exemple historiques, à vérifier et remplacer pour un nouveau voyage. Les noms des joueurs apparaissent aussi dans les textes de l'interface et des routes API.
+The itinerary's schedules, bookings, and addresses are historical sample data. Verify and replace them for a new trip. Player names also appear in interface text and API routes. To adapt the experience to another language, update those strings and the quest content.
 
-## Hébergement et accès
+## Hosting and access
 
-L'application possède un serveur, une base D1 et un stockage R2 : **elle ne fonctionne pas directement sur GitHub Pages**.
+The app requires a server, a D1 database, and R2 storage. **It cannot run directly on GitHub Pages.**
 
-Pour une nouvelle instance sur ChatGPT Sites, créez un nouveau projet et configurez ses propres ressources ainsi que `ORGANIZER_EMAIL`. Le fichier `.openai/hosting.json` ne contient volontairement aucun `project_id` existant.
+For a new ChatGPT Sites instance, create a new project and configure its own resources and `ORGANIZER_EMAIL`. The `.openai/hosting.json` file intentionally contains no existing `project_id`.
 
-L'authentification de production repose sur les en-têtes d'identité injectés par la passerelle de confiance de ChatGPT Sites. Pour héberger ailleurs, remplacez cette intégration par une authentification vérifiée côté serveur : les en-têtes fournis directement par un client ne doivent jamais être considérés comme une identité.
+Production authentication relies on identity headers injected by the trusted ChatGPT Sites gateway. To host elsewhere, replace that integration with verified server-side authentication. Never treat identity headers supplied directly by a client as proof of identity.
 
-Chaque instance représente **un voyage partagé**, avec une progression et un album communs. Elle n'isole pas plusieurs groupes de voyageurs. Conservez un accès réservé aux participants si vous y stockez des photos. Les originaux peuvent contenir des métadonnées EXIF, notamment de localisation.
+Each instance represents **one shared trip**, with a common progression state and album. It does not isolate separate groups of travelers. Restrict access to participants when storing photos. Original files may contain EXIF metadata, including location information.
 
-## Origine et licences
+## Credits and licensing
 
-Projet conçu par [ShiNoiii](https://github.com/ShiNoiii531), avec l'aide de ChatGPT et Codex.
+Created by [ShiNoiii](https://github.com/ShiNoiii531), with help from ChatGPT and Codex.
 
-Le code est publié pour présenter le projet. Aucune licence générale de réutilisation n'a encore été choisie pour le code et les illustrations propres à Vienna Quest. Les licences des éléments tiers sont conservées, notamment `build/sites-vite-plugin.LICENSE` et `vendor/shadcn-tailwind-4.13.0.LICENSE.md`.
-
----
-
-**English:** Vienna Quest turns a trip into a pixel-art adventure, with progressive reveals, shared quests, photo check-ins and a memory album. This is an anonymized source release of a project created for a real trip to Vienna. It includes no private trip photos, saved progress, credentials or production site identifier. The original hosted trip remains private. A backend is required; this is not a GitHub Pages static app.
+The source is published to showcase the project. No general reuse license has been selected for Vienna Quest's own code and artwork. Third-party license notices are retained, including `build/sites-vite-plugin.LICENSE` and `vendor/shadcn-tailwind-4.13.0.LICENSE.md`.
